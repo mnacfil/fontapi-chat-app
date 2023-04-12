@@ -4,12 +4,15 @@ const connectToDb = require('./config/db');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const errorHandler = require('./middleware/error-handler')
+const errorHandler = require('./middlewares/error-handler');
+const userRoute = require('./routes/userRoute');
+
 
 app.use(express.json());
 app.use(cors())
+app.use('/api/v1/user', userRoute);
 
-// testing router
+// testing route
 app.get('/test', (req, res) => {
     res.json({ message: "Hello World"})
 })
