@@ -21,7 +21,14 @@ const Main = () => {
 }
 
 const MainWrapper = styled.main`
-
-`;
+  
+  .main-container {
+    width: 90vw;
+    margin: 0 auto;
+    height: calc(100vh - 4rem);
+    display: grid;
+    grid-template-columns: 350px 1.5fr 1fr;
+  }
+`;  
 
 export default Main
