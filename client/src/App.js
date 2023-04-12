@@ -1,10 +1,13 @@
-
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Main, Conversation } from './pages'
 function App() {
   return (
-    <div className="App">
-      <h1>Hello world</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Main />}/>
+        <Route path='/conversation' element={<Conversation />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
