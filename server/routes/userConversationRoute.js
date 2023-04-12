@@ -6,10 +6,10 @@ const {
     createConversation, 
     getUserConversation, 
     getChatConversationOfTwoUser 
-} = require('../controllers/ConversationController')
+} = require('../controllers/conversationController')
 
 router.post('/', authenticate, createConversation);
-router.get('/:userId',authenticate, getUserConversation);
+router.get('/',authenticate, getUserConversation);
 router.get('/chat/:userOneId/:userTwoId',authenticate, getChatConversationOfTwoUser);
 
 module.exports = router;
