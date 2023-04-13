@@ -1,18 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Chat = ({ firstName, lastName, circle, message, createdAt}) => {
+const Chat = ({ firstName, lastName, message, createdAt}) => {
+  const initial = [...firstName][0].toUpperCase()
   return (
     <Wrapper>
       <div className="chat-container">
         <div>
-          <div className="left">{circle}</div>
+          <div className="left">{initial}</div>
           <div className="right">
             <h5 className='name'>{firstName} {lastName}</h5>
             <p>
               <span className='firstName'>{firstName}:</span>
               <span className='message'>{message}</span>
-              <span className='time-ago'>{createdAt}</span>
+              {/* <span className='time-ago'>{createdAt}</span> */}
             </p>
           </div>
         </div>

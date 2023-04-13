@@ -5,7 +5,8 @@ import {
     useEffect,
 } from 'react';
 import { serverBaseUrl } from '../../util/axios';
-import { conversationPath } from '../../util/constant';
+import { conversationPath, usersPath } from '../../util/constant';
+import { getChattedUsers } from '../../util/AppContextHelper'
 import { useAccountContext } from '../Account/context'
 
 import { io } from 'socket.io-client';
@@ -14,8 +15,10 @@ const socket = io('http://localhost:8080/');
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    const [conversation, setConversation] = useState([]);
+    const [userConversation, setUserConversation] = useState([]);
     const { user } = useAccountContext();
+    const [chattedUsers, setChattedUsers] = useState([]);
+    const [dbUsers, setDbUsers] = useState([]);
 
     useEffect(() => {
         socket.on('connect', (err) => {
@@ -26,7 +29,26 @@ export const AppProvider = ({ children }) => {
     const getUserConversation = async() => {
         try {
             const response = await serverBaseUrl.get(conversationPath)
-            // console.log(response.data.data);
+            const data = getChattedUsers(response.data.data, user.userID)
+            setChattedUsers(data);
+            setUserConversation(response.data.data)
+        } catch (error) {
+            console.log(error);
+        }   
+    }
+
+    const getAllUser = async() => {
+        try {
+            const response = await serverBaseUrl.get(usersPath);
+            setDbUsers(response.data.data)
+        } catch (error) {
+            console.log(error);
+        }   
+    }
+    const getUser = async(id) => {
+        try {
+            const response = await serverBaseUrl.get(`${usersPath}/${id}`);
+            return response.data.data;
         } catch (error) {
             console.log(error);
         }   
@@ -34,6 +56,7 @@ export const AppProvider = ({ children }) => {
 
     useEffect(() => {
         getUserConversation()
+        getAllUser();
     }, [user]);
 
     // once the user login, add this user to the server
@@ -41,14 +64,17 @@ export const AppProvider = ({ children }) => {
         if(user) {
             socket.emit("addThisUser", user.userID )
             socket.on('getAllUser', (users) => {
-                console.log(users);
+                // console.log(users);
             })
         }
     }, [user]);
     
     return (
         <AppContext.Provider
-            value="from app provider"
+            value={{
+                chattedUsers,
+                dbUsers
+            }}
         >
             {children}
         </AppContext.Provider>

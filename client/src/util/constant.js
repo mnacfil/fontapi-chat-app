@@ -3,6 +3,7 @@ export const baseUrl = 'http://localhost:8080/api/v1';
 // for register and login
 export const registerPath = '/account/register';
 export const loginPath = '/account/login';
+export const usersPath = '/account/users';
 //  for messages
 export const messagePath = '/message';
 // for conversation
