@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FormInput } from '../components'
 import { useAccountContext } from '../context/Account/context';
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
 
 const SignIn = () => {
     const {
@@ -23,17 +24,24 @@ const SignIn = () => {
         const value = e.target.value;
         handleInput({ name, value });
     }
-
+    console.log(userAction);
     const handleSubmit = (e) => {
         e.preventDefault();
+        const { firstName, lastName, email, password } = userInput;
+        if(!email || !password || (userAction === 'register' && (!firstName || !lastName) )) {
+            toast.error('Please fill all field.');
+            return;
+        }
         if(userAction === 'login') {
             loginUser({
                  email: userInput.email, 
                  password: userInput.password
             });
+            toast.success(`Welcome ${firstName}`);
         }
         if(userAction === 'register') {
             registerUser(userInput);
+            toast.success(`Welcome ${firstName}`);
         }
         clearInputs();
     }
@@ -94,7 +102,7 @@ const SignIn = () => {
                 </button>
                 <p>
                     { isMember ? 'Not a member yet?' : 'Already a member?'}
-                    <button onClick={toggleMember}>
+                    <button onClick={toggleMember} type='button'>
                         { isMember ? 'Register': 'Login' }
                     </button>
                 </p>
