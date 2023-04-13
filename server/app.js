@@ -21,17 +21,35 @@ const io = require('socket.io')( http, {
 })
 
 // socket io
+let users = [];
+
+const addUser = (user) => {
+    users.push(user);
+}
+const getUser = (userID) => {
+    return users.find(user => user.userID === userID);
+}
+const removeUser = (socketID) => {
+    users = users.filter(user => user.socketID !== socketID)
+}
+
 io.on('connection', (socket) => {
     console.log(`user just connected with id: ${socket.id}`);
 
-    socket.emit('hello', 'hello from server')
+    // catch the event called "addThisUser" fire by client,
+    socket.on('addThisUser', (userID) => {
+        addUser({ userID, socketID: socket.id});
+        io.emit('getAllUser', users);
+    })
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
+        removeUser(socket.id);
+        io.emit('getAllUser', users)
     })
 })
 
-app.use('/api/v1/user', userRoute);
+app.use('/api/v1/account', userRoute);
 app.use('/api/v1/message', messageRoute);
 app.use('/api/v1/conversation', conversationRoute);
 app.use(errorHandler);
