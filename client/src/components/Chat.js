@@ -22,8 +22,8 @@ const Chat = ({ firstName, lastName, circle, message, createdAt}) => {
 }
 
 const Wrapper = styled.article`
-  background-color: var(--grey-100);
-  /* box-shadow: var(--shadow-2); */
+  background-color: var(--grey-50);
+  box-shadow: var(--shadow-2);
   transition: var(--transition);
   margin: 5px 0;
   border-radius: var(--borderRadius);
