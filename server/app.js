@@ -4,40 +4,44 @@ const connectToDb = require('./config/db');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const http = require('http').createServer(app);
 const errorHandler = require('./middlewares/error-handler');
 const userRoute = require('./routes/userRoute');
 const messageRoute = require('./routes/messageRoute');
 const conversationRoute = require('./routes/userConversationRoute');
-const io = require('socket.io')( 5500, {
-    cors: {
-        origin: 'http://localhost:3000'
-    }
-})
+
 
 app.use(express.json());
 app.use(cors())
-app.use('/api/v1/user', userRoute);
-app.use('/api/v1/message', messageRoute);
-app.use('/api/v1/conversation', conversationRoute);
-app.use(errorHandler);
+
+const io = require('socket.io')( http, {
+    cors: {
+        origin:  "http://localhost:3000"
+    }
+})
 
 // socket io
 io.on('connection', (socket) => {
     console.log(`user just connected with id: ${socket.id}`);
 
-    io.emit('hello', 'hello world')
+    socket.emit('hello', 'hello from server')
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
     })
 })
 
-const port = process.env.PORT || 6000;
+app.use('/api/v1/user', userRoute);
+app.use('/api/v1/message', messageRoute);
+app.use('/api/v1/conversation', conversationRoute);
+app.use(errorHandler);
+
+const port = process.env.PORT || 8080;
 
 const start = async() => {
     try {
         await connectToDb(process.env.MONGO_URL);
-        app.listen(port, () => {
+        http.listen(port, () => {
             console.log(`Server is listening on port: ${port}...`);
         })
     } catch(error) {
