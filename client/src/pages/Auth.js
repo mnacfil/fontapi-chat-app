@@ -1,8 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FormInput } from '../components'
+import { useAccountContext } from '../context/Account/context'
 
 const SignIn = () => {
+    const {userInput, handleInput} = useAccountContext();
+
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        handleInput({ name, value });
+    }
+
   return (
     <Wrapper>
         <div className="signin-container">
@@ -12,26 +21,30 @@ const SignIn = () => {
                 <FormInput 
                     label='First Name' 
                     name='firstName'
-                    value=""
+                    value={userInput.firstName}
                     type="text"
+                    handleChange={handleChange}
                 />
                 <FormInput 
                     label='Last Name' 
                     name='lastName'
-                    value=""
+                    value={userInput.lastName}
                     type="text"
+                    handleChange={handleChange}
                 />
                 <FormInput 
                     label='Email' 
                     name='email'
-                    value=""
+                    value={userInput.email}
                     type="email"
+                    handleChange={handleChange}
                 />
                 <FormInput 
                     label='Password' 
                     name='password'
-                    value=""
+                    value={userInput.password}
                     type="password"
+                    handleChange={handleChange}
                 />
             </form>
         </div>

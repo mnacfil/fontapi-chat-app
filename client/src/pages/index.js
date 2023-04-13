@@ -1,9 +1,9 @@
 import Main from './Main';
 import Conversation from './Conversation';
-import SignIn from './SignIn';
+import Auth from './Auth';
 
 export { 
     Main, 
     Conversation,
-    SignIn 
+    Auth 
 };
