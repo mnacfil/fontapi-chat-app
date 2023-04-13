@@ -3,9 +3,11 @@ import Chat from './Chat';
 import styled from 'styled-components';
 // import users from '../users'
 import {useAppContext } from '../context/App/context'
+import { useAccountContext } from '../context/Account/context';
 
 const ChatBox = () => {
-  const { chattedUsers, dbUsers } = useAppContext()
+  const { chattedUsers, dbUsers, setCurrentChat } = useAppContext();
+  const { user } = useAccountContext()
   const users = dbUsers.filter(dbUser => chattedUsers.includes(dbUser._id))
   return (
     <Wrapper>
@@ -15,9 +17,14 @@ const ChatBox = () => {
         </div>)
       :
         <>
-          {users.map((user, index) => {
+          {users.map((chatUser, index) => {
             return (
-              <Chat key={index} {...user}/>
+              <Chat 
+                key={index} 
+                {...chatUser} 
+                setCurrentChat={setCurrentChat}
+                userID = {user.userID}
+                />
               )
             })}
         </>

@@ -27,7 +27,7 @@ const MainWrapper = styled.main`
     margin: 0 auto;
     height: calc(100vh - 4rem);
     display: grid;
-    grid-template-columns: 350px 1.5fr 1fr;
+    grid-template-columns: 350px 1.5fr 100px;
   }
 `;  
 

@@ -1,14 +1,14 @@
 import React from 'react'
 
-const SearchInput = ({ placeholder }) => {
+const SearchInput = ({ placeholder, handleChange, value }) => {
   return (
-    <form>
-        <input 
-            type="text" 
-            placeholder={placeholder}
-            className='form-input'
-            />
-    </form>
+      <input 
+          type="text" 
+          placeholder={placeholder}
+          className='form-input'
+          value={value}
+          onChange={handleChange}
+        />
   )
 }
 

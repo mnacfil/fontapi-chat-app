@@ -1,11 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+import { serverBaseUrl } from '../util/axios'
+import {conversationOfTwoPath} from '../util/constant'
 
-const Chat = ({ firstName, lastName, message, createdAt}) => {
+const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, userID }) => {
   const initial = [...firstName][0].toUpperCase()
+
+  // get the conversation between this user and current user
+
+  const handleClick = async () => {
+    try {
+      const response = await serverBaseUrl.get(`${conversationOfTwoPath}/${_id}/${userID}`)
+      setCurrentChat(response.data.data[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Wrapper>
-      <div className="chat-container">
+      <div className="chat-container" onClick={handleClick}>
         <div>
           <div className="left">{initial}</div>
           <div className="right">
@@ -42,7 +55,7 @@ const Wrapper = styled.article`
         width: 3.5rem;
         height: 3.5rem;
         border-radius: 50%;
-        background-color: #888;
+        background-color: var(--primary-300);
         display: grid;
         place-items: center;
         margin-right: 10px;

@@ -5,7 +5,7 @@ import {
     useEffect,
 } from 'react';
 import { serverBaseUrl } from '../../util/axios';
-import { conversationPath, usersPath } from '../../util/constant';
+import { conversationPath, usersPath, messagePath } from '../../util/constant';
 import { getChattedUsers } from '../../util/AppContextHelper'
 import { useAccountContext } from '../Account/context'
 
@@ -19,10 +19,14 @@ export const AppProvider = ({ children }) => {
     const { user } = useAccountContext();
     const [chattedUsers, setChattedUsers] = useState([]);
     const [dbUsers, setDbUsers] = useState([]);
+    const [myMessage, setMyMessage] = useState('');
+    const [currentChat, setCurrentChat] = useState(null);
 
     useEffect(() => {
         socket.on('connect', (err) => {
-            socket.emit('hello', 'hello from client')
+            socket.on('receiveMessage', (payload) => {
+                console.log(payload);
+            })
         })
     }, []);
 
@@ -68,12 +72,40 @@ export const AppProvider = ({ children }) => {
             })
         }
     }, [user]);
+
+    const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0]
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        console.log("Submiting");
+        const messageBody = {
+            message: myMessage,
+            conversationId: currentChat._id
+        }
+
+        socket.emit('sendMessage', {
+            senderID: user.userID,
+            receiverID,
+            message: myMessage
+        });
+
+        try {
+            const response = await serverBaseUrl.post(messagePath, messageBody);
+            console.log(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
     return (
         <AppContext.Provider
             value={{
                 chattedUsers,
-                dbUsers
+                dbUsers,
+                myMessage,
+                setMyMessage,
+                setCurrentChat,
+                handleSubmit
             }}
         >
             {children}
