@@ -10,7 +10,7 @@ const ChatList = () => {
         <div className="chatList-title">
           <h3>Chats</h3>
         </div>
-        <SearchInput />
+        <SearchInput placeholder='Search user...'/>
         <ChatBox />
       </div>
     </Wrapper>

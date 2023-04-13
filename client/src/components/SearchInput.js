@@ -1,11 +1,11 @@
 import React from 'react'
 
-const SearchInput = () => {
+const SearchInput = ({ placeholder }) => {
   return (
     <form>
         <input 
             type="text" 
-            placeholder='search user'
+            placeholder={placeholder}
             className='form-input'
             />
     </form>
