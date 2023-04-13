@@ -12,10 +12,12 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
 
     useEffect(() => {
-        socket.on('connect_error', (err) => {
-            console.log('connect_err due to ' + '' + err.message);
+        socket.on('connect', (err) => {
+            console.log(socket.id);
+            socket.emit('hello', 'hello from client')
         })
     }, []);
+    
     return (
         <AppContext.Provider
             value="from app provider"
