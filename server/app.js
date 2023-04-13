@@ -24,10 +24,12 @@ const io = require('socket.io')( http, {
 let users = [];
 
 const addUser = (user) => {
+    const isAlreadyConnected = users.find(currentUser => currentUser.userID === user.userID );
+    if(isAlreadyConnected) return;
     users.push(user);
 }
-const getUser = (userID) => {
-    return users.find(user => user.userID === userID);
+const getUser = (id) => {
+    return users.find(user => user.userID === id);
 }
 const removeUser = (socketID) => {
     users = users.filter(user => user.socketID !== socketID)
@@ -41,6 +43,18 @@ io.on('connection', (socket) => {
         addUser({ userID, socketID: socket.id});
         io.emit('getAllUser', users);
     })
+
+      //send and get message
+        socket.on("sendMessage", (payload) => {
+            console.log(payload);
+            const { senderID, receiverID, message } = payload;
+            const user = getUser(receiverID);
+            io.to(user.socketID).emit("receiveMessage", {
+                senderID,
+                message,
+            });
+        });
+
 
     socket.on('disconnect', () => {
         console.log('User disconnected');

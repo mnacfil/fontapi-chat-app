@@ -1,6 +1,6 @@
 const {createToken, payload, responseTemplate} = require('../middlewares/utilities');
 const User = require('../models/User')
-// const { BadRequest, Unauthorized } = require('../error')
+const { getUserConversation } = require('./conversationController')
 
 const register = async(req, res) => {
     const user = await User.create(req.body);
@@ -34,9 +34,31 @@ const login = async(req, res) => {
         ));
 }
 
+const getAllUser = async(req, res) => {
+    const users = await User.find({});
+    res.
+        status(201).
+        json(responseTemplate(
+            'SUCCESS',
+            'Successfully register the user',
+            data = users
+        ));
+}
 
+const getUser = async(req, res) => {
+    const user = await User.findOne({_id: req.params.id});
+    res.
+        status(201).
+        json(responseTemplate(
+            'SUCCESS',
+            'Successfully register the user',
+            data = user
+        ));
+}
 
 module.exports = {
     register,
-    login
+    login,
+    getAllUser,
+    getUser
 }

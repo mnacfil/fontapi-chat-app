@@ -2,7 +2,7 @@ const Message = require('../models/Message');
 const { responseTemplate } = require('../middlewares/utilities');
 
 const createMessage = async(req, res) => {
-    console.log(req.user);
+    req.body.sender = req.user.userID;
     const message = await Message.create(req.body);
     res.status(200).json(responseTemplate(
         'SUCCESS',
@@ -12,11 +12,11 @@ const createMessage = async(req, res) => {
 }
 
 const getConversation = async(req, res) => {
-    const conversations = await Message.find({ conversationId: req.params.id });
+    const conversation = await Message.find({ conversationId: req.params.id });
     res.status(200).json(responseTemplate(
         'SUCCESS',
         'Succesfully get the conversations ',
-        conversations
+        conversation
     ));
 }
 
