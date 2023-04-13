@@ -4,24 +4,25 @@ import {FaVideo} from 'react-icons/fa';
 import styled from 'styled-components';
 import { useAppContext } from '../context/App/context';
 const ConversationHeader = () => {
-    const { chatMateUser } = useAppContext();
+    const { chatMateUser, currentChat } = useAppContext();
+    console.log(currentChat);
     const name = `${chatMateUser?.firstName} ${chatMateUser?.lastName}`;
     const avatar = [...name[0].toUpperCase()] || 'A';
   return (
-    <Wrapper>
-        <div className="header-container">
-            <div className="userAvatar">{avatar}</div>
-            <div className='user-info'>
-                <h5 className='name'>
-                    {name}
-                </h5>
-                <div className="options">
-                    <span><FiPhoneCall /></span>
-                    <span><FaVideo /></span>
+        <Wrapper>
+            <div className="header-container">
+                <div className="userAvatar">{avatar}</div>
+                <div className='user-info'>
+                    <h5 className='name'>
+                        {name}
+                    </h5>
+                    <div className="options">
+                        <span><FiPhoneCall /></span>
+                        <span><FaVideo /></span>
+                    </div>
                 </div>
             </div>
-        </div>
-  </Wrapper>
+        </Wrapper>
   )
 }
 
