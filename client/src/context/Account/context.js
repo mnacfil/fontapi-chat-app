@@ -7,8 +7,6 @@ import {
 import { serverBaseUrl } from '../../util/axios';
 import { loginPath, registerPath } from '../../util/constant';
 import { getUserFromLS, saveUserToLS, saveUserToken } from '../../util/localStorage';
-import { useNavigate } from 'react-router-dom';
-import { redirect } from 'react-router-dom';
 const AccountContext = createContext();
 
 const defaultUserInput = {
@@ -21,9 +19,8 @@ const defaultUserInput = {
 export const AccountProvider = ({ children }) => {
     const [ isLoading, setIsLoading] = useState(false);
     const [ isError, setIsError] = useState(false);
-    const [ user, setUser ] = useState(null);
+    const [ user, setUser ] = useState(getUserFromLS());
     const [ userInput, setUserInput ] = useState(defaultUserInput);
-    const [ isUserHaveAccount, setIsUserHaveAccount ] = useState(getUserFromLS());
     const [ isLogin, setIsLogin ] = useState(false);
     const [ isMember, setIsMember ] = useState(true);
     const [ userAction, setUserAction ] = useState('login');
@@ -33,7 +30,6 @@ export const AccountProvider = ({ children }) => {
             return { ...prevValue, [name]: value }
         });
     }
-
     const toggleMember = () => {
         setIsMember(prev => !prev);
         if(userAction === 'login') {
@@ -51,6 +47,7 @@ export const AccountProvider = ({ children }) => {
             saveUserToken(token);
             setIsLoading(false);
             setIsLogin(true);
+            setUser(payloadUser);
         } catch (error) {
             console.log(error);
             setIsError(error);
@@ -65,6 +62,7 @@ export const AccountProvider = ({ children }) => {
             saveUserToken(token);
             setIsLoading(false);
             setIsLogin(true);
+            setUser(payloadUser);
         } catch (error) {
             console.log(error);
             setIsError(error)
@@ -80,7 +78,6 @@ export const AccountProvider = ({ children }) => {
             value={{
                 userInput,
                 handleInput,
-                isUserHaveAccount,
                 isLogin,
                 toggleMember,
                 isMember,
@@ -89,7 +86,8 @@ export const AccountProvider = ({ children }) => {
                 userAction,
                 registerUser,
                 loginUser,
-                clearInputs
+                clearInputs,
+                user
             }}
         >
             {children}

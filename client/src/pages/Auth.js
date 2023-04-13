@@ -24,7 +24,6 @@ const SignIn = () => {
         const value = e.target.value;
         handleInput({ name, value });
     }
-    console.log(userAction);
     const handleSubmit = (e) => {
         e.preventDefault();
         const { firstName, lastName, email, password } = userInput;
