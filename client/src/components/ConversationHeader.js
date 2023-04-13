@@ -2,14 +2,19 @@ import React from 'react'
 import {FiPhoneCall} from 'react-icons/fi';
 import {FaVideo} from 'react-icons/fa';
 import styled from 'styled-components';
-
+import { useAppContext } from '../context/App/context';
 const ConversationHeader = () => {
+    const { chatMateUser } = useAppContext();
+    const name = `${chatMateUser?.firstName} ${chatMateUser?.lastName}`;
+    const avatar = [...name[0].toUpperCase()] || 'A';
   return (
     <Wrapper>
         <div className="header-container">
-            <div className="userAvatar">J</div>
+            <div className="userAvatar">{avatar}</div>
             <div className='user-info'>
-                <h5 className='name'>John Wick</h5>
+                <h5 className='name'>
+                    {name}
+                </h5>
                 <div className="options">
                     <span><FiPhoneCall /></span>
                     <span><FaVideo /></span>

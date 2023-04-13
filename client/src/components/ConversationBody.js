@@ -1,20 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useAppContext } from '../context/App/context';
 
 const ConversationBody = () => {
+  const { messages, myMessage } = useAppContext();
+  const [ ownMessages, setOwnMessages]= useState([])
+  // console.log(messages);
+
+  useEffect(() => {
+    setOwnMessages(prevOwnMessages => [...prevOwnMessages, myMessage])
+  }, [])
+
   return (
     <Wrapper>
       <div className="conversation-body-container">
-        <div className='left-message'>
-          <p className='other'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, odio.
-          </p>
-        </div>
-        <div className='right-message'>
-          <p className='sender'>
-            Lorem ipsum dolor sit amet.
-          </p>
-        </div>
+        {
+          messages.map((item, index) => {
+            <div className='left-message' key={index}>
+              <p className='other'>
+                {item.message}
+              </p>
+            </div>
+          })
+        }
+        {
+          ownMessages.map((ownItem, index) => {
+            return (
+              <div className='right-message' key={index}>
+                <p className='sender'>
+                  {ownItem}
+                </p>
+              </div>
+            )
+          })
+        }
       </div>
     </Wrapper>
   )

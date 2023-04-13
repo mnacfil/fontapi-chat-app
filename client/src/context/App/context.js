@@ -21,14 +21,35 @@ export const AppProvider = ({ children }) => {
     const [dbUsers, setDbUsers] = useState([]);
     const [myMessage, setMyMessage] = useState('');
     const [currentChat, setCurrentChat] = useState(null);
+    const [receiveMessage, setReceiveMessage] = useState(null);
+    const [messages, setMessages] = useState([]);
+    const [chatMateUser, setChatMateUser] = useState(null);
+
+    const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0];
+    console.log(receiverID);
 
     useEffect(() => {
         socket.on('connect', (err) => {
-            socket.on('receiveMessage', (payload) => {
-                console.log(payload);
+            socket.on('receiveMessage', ({ senderID, message }) => {
+                setReceiveMessage({
+                    sender: senderID,
+                    message,
+                    receivedAt: Date.now()
+                })
             })
         })
     }, []);
+
+    // everytime user receiver a message,and different chatmate
+    useEffect(() => {
+        // since on initial render receiveMessage is null, 
+        if(receiveMessage) {
+            // if the receive message is coming to one im currently chatting.
+            if(currentChat?.userInvolve.includes(receiveMessage.sender)) {
+                setMessages(prevMessages => [...prevMessages, receiveMessage]);
+            }
+        }
+    }, [receiveMessage, currentChat])
 
     const getUserConversation = async() => {
         try {
@@ -49,14 +70,30 @@ export const AppProvider = ({ children }) => {
             console.log(error);
         }   
     }
-    const getUser = async(id) => {
+
+    const getChatMateUser = async(id) => {
         try {
-            const response = await serverBaseUrl.get(`${usersPath}/${id}`);
-            return response.data.data;
+            const response = await serverBaseUrl.get(`${usersPath}/${receiverID}`);
+            setChatMateUser(response.data.data)
         } catch (error) {
             console.log(error);
         }   
     }
+
+    // get the messages from current chatmate
+    const getMessages = async() => {
+        try {
+            const response = await serverBaseUrl.get(`${messagePath}/${currentChat?._id}`);
+            setMessages(response.data.data)
+        } catch (error) {
+            console.log(error);
+        }   
+    }
+
+    useEffect(() => {
+        getChatMateUser();
+        getMessages();
+    }, [currentChat]);
 
     useEffect(() => {
         getUserConversation()
@@ -72,8 +109,6 @@ export const AppProvider = ({ children }) => {
             })
         }
     }, [user]);
-
-    const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0]
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -103,9 +138,12 @@ export const AppProvider = ({ children }) => {
                 chattedUsers,
                 dbUsers,
                 myMessage,
+                messages,
+                currentChat,
+                chatMateUser,
                 setMyMessage,
                 setCurrentChat,
-                handleSubmit
+                handleSubmit,
             }}
         >
             {children}
