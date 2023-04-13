@@ -3,6 +3,7 @@ import ChatList from './ChatList';
 import Conversation from './Conversation';
 import Header from './Header';
 import FormInput from './FormInput';
+import ProtectedRoute from './ProtectedRoute';
 
 
 export { 
@@ -10,5 +11,6 @@ export {
     ChatList,
     Conversation,
     Header,
-    FormInput
+    FormInput,
+    ProtectedRoute
 }
