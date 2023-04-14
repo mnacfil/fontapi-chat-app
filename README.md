@@ -12,9 +12,9 @@ Clone this repo by typing in your command line.
     
 After cloning, you will see fontapi-exam-chat-app folder.
 
-Navigate to server folder by typing.
+Navigate to fontapi-exam-chat-app folder by typing.
 
-    cd ./server
+    cd ./fontapi-exam-chat-app
 In, server folder install all the dependencies by typing. 
 
     npm install
