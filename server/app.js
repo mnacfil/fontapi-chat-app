@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
         io.emit('getAllUser', users);
     })
 
-      //send and get message
+      //send and receive message
         socket.on("sendMessage", (payload) => {
             console.log(payload);
             const { senderID, receiverID, message } = payload;
