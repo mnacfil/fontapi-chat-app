@@ -6,9 +6,11 @@ import {useAppContext } from '../context/App/context'
 import { useAccountContext } from '../context/Account/context';
 
 const ChatBox = () => {
-  const { chattedUsers, dbUsers, setCurrentChat } = useAppContext();
-  const { user } = useAccountContext()
-  const users = dbUsers.filter(dbUser => chattedUsers.includes(dbUser._id))
+  const { chattedUsers, dbUsers, setCurrentChat, onlineUsers } = useAppContext();
+  console.log(onlineUsers);
+  const { user } = useAccountContext();
+  const users = dbUsers.filter(dbUser => chattedUsers.includes(dbUser._id));
+
   return (
     <Wrapper>
       {chattedUsers.length === 0 ?  
@@ -18,12 +20,15 @@ const ChatBox = () => {
       :
         <>
           {users.map((chatUser, index) => {
+              const isOnline = onlineUsers.find(ou => ou.userID === chatUser._id);
+
             return (
               <Chat 
                 key={index} 
                 {...chatUser} 
                 setCurrentChat={setCurrentChat}
                 userID = {user.userID}
+                isOnline = { isOnline !== undefined ? true: false }
                 />
               )
             })}

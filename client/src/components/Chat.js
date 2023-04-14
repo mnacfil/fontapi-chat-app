@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { serverBaseUrl } from '../util/axios'
 import {conversationOfTwoPath, conversationPath} from '../util/constant'
 
-const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, userID }) => {
+const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, userID, isOnline }) => {
   const initial = [...firstName][0].toUpperCase()
 
   // get the conversation between this user and current user
@@ -27,7 +27,10 @@ const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, us
     <Wrapper>
       <div className="chat-container" onClick={handleClick}>
         <div>
-          <div className="left">{initial}</div>
+          <div className="left">
+            {initial}
+            <div className={`${isOnline && 'show-online-user'} online-status`}></div>
+          </div>
           <div className="right">
             <h5 className='name'>{firstName} {lastName}</h5>
             <p>
@@ -66,6 +69,21 @@ const Wrapper = styled.article`
         display: grid;
         place-items: center;
         margin-right: 10px;
+        position: relative;
+
+        .online-status {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #4BB543;
+          bottom: 6px;
+          right: 2px;
+          display: none;
+        }
+        .show-online-user {
+          display: block;
+        }
       }
 
       .right {
