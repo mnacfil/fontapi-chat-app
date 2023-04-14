@@ -144,6 +144,7 @@ export const AppProvider = ({ children }) => {
                 messages,
                 currentChat,
                 chatMateUser,
+                user,
                 setMyMessage,
                 setCurrentChat,
                 handleSubmit,

@@ -3,28 +3,28 @@ import styled from 'styled-components';
 import { useAppContext } from '../context/App/context';
 
 const ConversationBody = () => {
-  const { messages } = useAppContext();
-  console.log(messages);
+  const { messages, user } = useAppContext();
 
   return (
     <Wrapper>
       <div className="conversation-body-container">
         {
           messages.map((item, index) => {
+            const {message, sender } = item;
             return (
-              <div className='left-message' key={index}>
-                <p className='other'>
-                  {item.message}
+              <div 
+                className={`${user.userID === sender ? 'right-message' : 'left-message'}`} 
+                key={index}
+              >
+                <p 
+                  className={`${user.userID === sender ? 'me' : 'sender'}`}
+                  >
+                  {message}
                 </p>
               </div>
             )
           })
       }
-          {/* <div className='right-message'>
-            <p className='sender'>
-              "hello"
-            </p>
-          </div> */}
       </div>
     </Wrapper>
   )
@@ -51,10 +51,10 @@ const Wrapper = styled.div`
       box-shadow: var(--shadow-2);
       margin: 0;
     }
-    .other {
+    .sender {
       background-color: var(--grey-100);
     }
-    .sender {
+    .me {
       background-color: var(--primary-800);
       color: var(--white);
     }
