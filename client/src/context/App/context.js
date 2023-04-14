@@ -77,7 +77,7 @@ export const AppProvider = ({ children }) => {
     const getChatMateUser = async() => {
         try {
             const response = await serverBaseUrl.get(`${usersPath}/${receiverID}`);
-            setChatMateUser(response.data.data)
+            setChatMateUser(response.data.data);
         } catch (error) {
             console.log(error);
         }   
@@ -154,6 +154,7 @@ export const AppProvider = ({ children }) => {
                 setMyMessage,
                 setCurrentChat,
                 handleSubmit,
+                setNotification
             }}
         >
             {children}
