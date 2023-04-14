@@ -47,9 +47,9 @@ server is listening on port 8080
 note: if you already use the port 8080 in your local, you can simply change the value of it
 under the app.js file and look for a variable name port.
 
-Once you succesfully run the server, go to client folder by typing this command 
+note: You can open two tab of terminal in vscode, one for server and one for client. So that they
+can run on parallel
 
-    cd ../
 Once you succesfully run the server, go to client folder by typing this command 
 
     cd ../client
