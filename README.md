@@ -1,94 +1,71 @@
-# Project Title
+# Melvin Chat App
 
-One Paragraph of the project description
-
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
+A chat app where user chat his friend, know when his/her frind is online or not. User can receive notification and real time message.
 
 ## Getting Started
 
-These instructions will give you a copy of the project up and running on
-your local machine for development and testing purposes. See deployment
-for notes on deploying the project on a live system.
+### Running this chat app on your local
 
-### Prerequisites
+Clone this repo by typing in your command line.
 
-Requirements for the software and other tools to build, test and push
+    git clone git@github.com:mnacfil/fontapi-exam-chat-app.git
 
-- [Example 1](https://www.example.com)
-- [Example 2](https://www.example.com)
+After cloning, you will see two folder name, server and client.
 
-### Installing
+the server contains the backend logic.
+the client contains the frontend logic,
 
-A step by step series of examples that tell you how to get a development
-environment running
+Navigate to server folder by typing.
 
-Say what the step will be
+    cd ./server
+In, server folder install all the dependencies by typing. 
 
-    Give the example
+    npm install
+In order to start the server in development mode, you need an .env file 
+which contains the mongo_db connection url, token_secret, token_expiration.
 
-And repeat
+To add that, make a file called .env in the root directory of server folder
+and copy this value. 
 
-    until finished
+MONGO_URL = mongodb+srv://mnacfil:phidias22@test-projects.93f5pnx.mongodb.net/My-Chat-app?retryWrites=true&w=majority
+TOKEN_SECRET= QWERTYUIOP
+TOKEN_EXPIRATION = 2d
 
-End with an example of getting some data out of the system or using it
-for a little demo
+After creating the env file you can now start the server by typing this command. 
 
-## Running the tests
+    npm run dev
 
-Explain how to run the automated tests for this system
+this will start the server in development mode. You will see on the log that the
+server is listening on port 8080
 
-### Sample Tests
+note: if you already use the port 8080 in your local, you can simply change the value of it
+under the app.js file and look for a variable name port.
 
-Explain what these tests test and why
+Once you succesfully run the server, go to client folder by typing this command 
 
-    Give an example
+    cd ../
+Once you succesfully run the server, go to client folder by typing this command 
 
-### Style test
+    cd ../client
 
-Checks if the best practices and the right coding style has been used.
+On client folder, install the packages or dependencies by typing, 
 
-    Give an example
+    npm install 
+    
+Once the installation is finish, you can now start the app by typing 
 
-## Deployment
-
-Add additional notes to deploy this on a live system
+    npm start
+    
+this will start the app in localhost:3000
 
 ## Built With
 
-- [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-  for the Code of Conduct
-- [Creative Commons](https://creativecommons.org/) - Used to choose
-  the license
+- Create-react-app boilerplate
+- React, Context API, Styled-components
+- NodeJS, Mongoose, Mongodb, ExpressJs
 
-## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
+## Author
+- **Melvin Nacfil**
+  [linkedIn](https://www.linkedin.com/in/melvin-nacfil-9596a8206)
 
-## Versioning
-
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
-
-## Authors
-
-- **Billie Thompson** - _Provided README Template_ -
-  [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
-
-## Acknowledgments
-
-- Hat tip to anyone whose code is used
-- Inspiration
-- etc
