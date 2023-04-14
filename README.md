@@ -58,6 +58,25 @@ Once the installation is finish, you can now start the app by typing
     
 this will start the app in localhost:3000
 
+## How to use and test the app
+
+Once the server run and client start the app, You need to open new browser in incognito mode since
+I save the token and user details in localStorage, if you dont do that you will login the same user for
+every browser you open. Once you open two browser, one is in incognito mode and one is regular browser,
+you can login or register the user. I will give sample user in order for you to test it, otherwise you 
+can create your own user and this will save in my mongodb. 
+
+### Sample user
+
+email: melvin@gmail.com
+password: passw0rd
+
+email: apple@gmail.com
+password: passw0rd
+
+email: gates@gmail.com
+password: passw0rd
+
 ## Built With
 
 - Create-react-app boilerplate
