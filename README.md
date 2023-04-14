@@ -9,11 +9,8 @@ A chat app where user chat his friend, know when his/her frind is online or not.
 Clone this repo by typing in your command line.
 
     git clone git@github.com:mnacfil/fontapi-exam-chat-app.git
-
-After cloning, you will see two folder name, server and client.
-
-the server contains the backend logic.
-the client contains the frontend logic,
+    
+After cloning, you will see fontapi-exam-chat-app folder.
 
 Navigate to server folder by typing.
 
