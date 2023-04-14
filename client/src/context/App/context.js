@@ -28,7 +28,6 @@ export const AppProvider = ({ children }) => {
     const [notification, setNotification] = useState(0);
 
     const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0];
-
     useEffect(() => {
         socket.on('connect', (err) => {
             socket.on('receiveMessage', ({ senderID, message }) => {
@@ -42,7 +41,7 @@ export const AppProvider = ({ children }) => {
             })
         })
     }, []);
-    console.log(notification);
+    console.log(receiveMessage);
 
     // everytime user receiver a message,and different chatmate
     useEffect(() => {
@@ -152,6 +151,7 @@ export const AppProvider = ({ children }) => {
                 user,
                 onlineUsers,
                 notification,
+                receiveMessage,
                 setMyMessage,
                 setCurrentChat,
                 handleSubmit,

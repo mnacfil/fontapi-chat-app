@@ -4,7 +4,7 @@ import { useAccountContext } from '../context/Account/context';
 import Chat from './Chat';
 
 const OnlineUsers = () => {
-    const { dbUsers, onlineUsers, setCurrentChat } = useAppContext();
+    const { dbUsers, onlineUsers, setCurrentChat, receiveMessage } = useAppContext();
     const { user } = useAccountContext();
     const users = dbUsers.filter(dbUser => {
         for(const onlineUser of onlineUsers ) {
@@ -21,6 +21,7 @@ const OnlineUsers = () => {
                     {...socketUser} 
                     setCurrentChat={setCurrentChat}
                     userID = {user.userID}
+                    receiveMessage={receiveMessage}
                     />
                   )
             })}

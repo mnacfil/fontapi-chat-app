@@ -61,6 +61,9 @@ const Wrapper = styled.section`
       
       .btn {
         background-color: var(--grey-500);
+        &:focus {
+          outline: none;
+        }
       }
       .friends {
         border-top-right-radius: 0px;

@@ -1,11 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { serverBaseUrl } from '../util/axios'
-import {conversationOfTwoPath, conversationPath} from '../util/constant'
+import {conversationOfTwoPath, conversationPath} from '../util/constant';
 
-const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, userID, isOnline }) => {
-  const initial = [...firstName][0].toUpperCase()
-
+const Chat = ({ firstName, lastName, _id, setCurrentChat, userID, isOnline, receiveMessage }) => {
+  const initial = [...firstName][0].toUpperCase();
   // get the conversation between this user and current user
 
   const handleClick = async () => {
@@ -35,7 +34,9 @@ const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, us
             <h5 className='name'>{firstName} {lastName}</h5>
             <p>
               <span className='firstName'>{firstName}:</span>
-              <span className='message'>{message}</span>
+              <span className='message'>
+                {_id === receiveMessage?.sender && receiveMessage?.message}
+              </span>
               {/* <span className='time-ago'>{createdAt}</span> */}
             </p>
           </div>

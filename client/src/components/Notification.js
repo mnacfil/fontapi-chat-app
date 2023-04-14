@@ -9,9 +9,11 @@ const Notification = () => {
     <Wrapper>
         <div className="notifications">
             <IoIosNotifications />
-            <div className='count'>
-                {notification}
-            </div>
+            {notification > 0 && 
+                <div className='count'>
+                    {notification}
+                </div>
+            }
         </div>
     </Wrapper>
   )
