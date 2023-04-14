@@ -25,8 +25,8 @@ export const AppProvider = ({ children }) => {
     const [messages, setMessages] = useState([]);
     const [chatMateUser, setChatMateUser] = useState(null);
 
+
     const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0];
-    console.log(receiverID);
 
     useEffect(() => {
         socket.on('connect', (err) => {
@@ -38,7 +38,7 @@ export const AppProvider = ({ children }) => {
                 })
             })
         })
-    }, []);
+    }, [receiveMessage]);
 
     // everytime user receiver a message,and different chatmate
     useEffect(() => {
@@ -71,7 +71,7 @@ export const AppProvider = ({ children }) => {
         }   
     }
 
-    const getChatMateUser = async(id) => {
+    const getChatMateUser = async() => {
         try {
             const response = await serverBaseUrl.get(`${usersPath}/${receiverID}`);
             setChatMateUser(response.data.data)
@@ -80,11 +80,11 @@ export const AppProvider = ({ children }) => {
         }   
     }
 
-    // get the messages from current chatmate
+    // get the conversation messages from current chatmate, base on conversation id
     const getMessages = async() => {
         try {
             const response = await serverBaseUrl.get(`${messagePath}/${currentChat?._id}`);
-            setMessages(response.data.data)
+            setMessages(response.data.data);
         } catch (error) {
             console.log(error);
         }   
@@ -106,6 +106,7 @@ export const AppProvider = ({ children }) => {
             socket.emit("addThisUser", user.userID )
             socket.on('getAllUser', (users) => {
                 // console.log(users);
+                // get all user connected to socket
             })
         }
     }, [user]);
@@ -126,6 +127,8 @@ export const AppProvider = ({ children }) => {
 
         try {
             const response = await serverBaseUrl.post(messagePath, messageBody);
+            setMessages(prevMessages => [...prevMessages, response.data.data]);
+            setMyMessage('');
             console.log(response.data.data);
         } catch (error) {
             console.log(error);

@@ -4,8 +4,7 @@ import {FaVideo} from 'react-icons/fa';
 import styled from 'styled-components';
 import { useAppContext } from '../context/App/context';
 const ConversationHeader = () => {
-    const { chatMateUser, currentChat } = useAppContext();
-    console.log(currentChat);
+    const { chatMateUser } = useAppContext();
     const name = `${chatMateUser?.firstName} ${chatMateUser?.lastName}`;
     const avatar = [...name[0].toUpperCase()] || 'A';
   return (
