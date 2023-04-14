@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { serverBaseUrl } from '../util/axios'
-import {conversationOfTwoPath} from '../util/constant'
+import {conversationOfTwoPath, conversationPath} from '../util/constant'
 
 const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, userID }) => {
   const initial = [...firstName][0].toUpperCase()
@@ -11,6 +11,13 @@ const Chat = ({ firstName, lastName, message, createdAt, _id, setCurrentChat, us
   const handleClick = async () => {
     try {
       const response = await serverBaseUrl.get(`${conversationOfTwoPath}/${_id}/${userID}`)
+      // if there no conversation then create conversation
+      if(response.data.data.length === 0) {
+        const reqBody = { receiverId: _id};
+        const response = await serverBaseUrl.post(conversationPath, reqBody);
+        setCurrentChat(response.data.data);
+        return;
+      }
       setCurrentChat(response.data.data[0]);
     } catch (error) {
       console.log(error);
