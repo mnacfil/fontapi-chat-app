@@ -6,10 +6,9 @@ import {useAppContext } from '../context/App/context'
 import { useAccountContext } from '../context/Account/context';
 
 const ChatBox = () => {
-  const { chattedUsers, dbUsers, setCurrentChat, onlineUsers, receiveMessage } = useAppContext();
+  const { chattedUsers, dbUsers, setCurrentChat, onlineUsers, receiveMessage, messages } = useAppContext();
   const { user } = useAccountContext();
   const users = dbUsers.filter(dbUser => chattedUsers.includes(dbUser._id));
-
   return (
     <Wrapper>
       {chattedUsers.length === 0 ?  
@@ -29,6 +28,7 @@ const ChatBox = () => {
                 userID = {user.userID}
                 isOnline = { isOnline !== undefined ? true: false }
                 receiveMessage={receiveMessage}
+                messages={messages}
                 />
               )
             })}

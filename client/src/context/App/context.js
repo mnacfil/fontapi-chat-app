@@ -109,9 +109,8 @@ export const AppProvider = ({ children }) => {
             socket.emit("addThisUser", user.userID )
             socket.on('getAllUser', (users) => {
                 // get all user connected to socket
-                const sockerUsers = users.filter(socketUser => socketUser.userID !== user.userID)
-                setOnlineUsers(sockerUsers);
-                console.log(sockerUsers);
+                const socketUsers = users.filter(socketUser => socketUser.userID !== user.userID)
+                setOnlineUsers(socketUsers);
             })
         }
     }, [user]);
