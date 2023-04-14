@@ -9,27 +9,28 @@ const ConversationFooter = () => {
     const handleChange = (e) => {
         setMyMessage(e.target.value);
     }
-  return (
-    <Wrapper>
-        <div className="controller-container">
-            <form>
-                <span><IoAddCircleSharp /></span>
-                <SearchInput 
-                    placeholder="Aa"
-                    location='chat'
-                    value={myMessage}
-                    handleChange={handleChange}
-                />
-                <button 
-                    className='btn'
-                    onClick={handleSubmit}
-                    >
-                    Send
-                </button>
-            </form>
-        </div>
-  </Wrapper>
-  )
+
+    return (
+        <Wrapper>
+            <div className="controller-container">
+                <form>
+                    <span><IoAddCircleSharp /></span>
+                    <SearchInput 
+                        placeholder="Aa"
+                        location='chat'
+                        value={myMessage}
+                        handleChange={handleChange}
+                    />
+                    <button 
+                        className='btn'
+                        onClick={handleSubmit}
+                        >
+                        Send
+                    </button>
+                </form>
+            </div>
+    </Wrapper>
+    )
 }
 
 const Wrapper = styled.div`

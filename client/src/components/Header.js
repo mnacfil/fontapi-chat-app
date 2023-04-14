@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 import { BsWhatsapp } from 'react-icons/bs'
+import { useAccountContext } from '../context/Account/context'
 
 const Header = () => {
+  const { user } = useAccountContext()
   return (
     <HeaderWrapper>
       <div className="header-container">
         <div className="logo">
           <BsWhatsapp />
         </div>
-        <p>Welcome to my chat app</p>
+        <p>Welcome to my chat app, <span>{user.firstName}</span></p>
       </div>
     </HeaderWrapper>
   )
@@ -39,6 +41,11 @@ const HeaderWrapper = styled.header`
       margin: 0;
       color: var(--primary-100);
       letter-spacing: var(--letterSpacing);
+
+       span {
+        text-transform: uppercase;
+        color: var(--white);
+       }
     }
   }
 `;

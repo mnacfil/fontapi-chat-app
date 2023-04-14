@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SearchInput from './SearchInput';
 import ChatBox from './ChatBox';
-import {} from 'react-icons'
+import OnlineUsers from './OnlineUsers';
+import {} from 'react-icons';
+
 const ChatList = () => {
+  const [activeTab, setActiveTab] = useState('friends');
+
+  const handleTab = (e) => {
+    setActiveTab(e.target.textContent.toLowerCase());
+  }
+
   return (
     <Wrapper>
       <div className="chatList-container">
@@ -11,7 +19,26 @@ const ChatList = () => {
           <h3>Chats</h3>
         </div>
         <SearchInput placeholder='Search user...'/>
-        <ChatBox />
+        <div className='chatList-tab'>
+          <button 
+            className={`${activeTab === 'friends' && 'active-tab'} btn btn-block friends`}
+            onClick={handleTab}
+          >
+            Friends
+          </button>
+          <button 
+            className={`${activeTab === 'online' && 'active-tab'} btn btn-block online`}
+            onClick={handleTab}
+          >
+            Online
+          </button>
+        </div>
+        {
+          activeTab === 'friends' && <ChatBox />
+        }
+                {
+          activeTab === 'online' && <OnlineUsers />
+        }
       </div>
     </Wrapper>
   )
@@ -23,6 +50,26 @@ const Wrapper = styled.section`
     width: 95%;
     .chatList-title {
       margin-top: 1rem;
+    }
+    .chatList-tab {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      
+      .btn {
+        background-color: var(--grey-500);
+      }
+      .friends {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+      .online {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+      .active-tab {
+        background-color: var(--primary-500);
+      }
     }
   }
 `;

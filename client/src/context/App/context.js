@@ -24,6 +24,7 @@ export const AppProvider = ({ children }) => {
     const [receiveMessage, setReceiveMessage] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chatMateUser, setChatMateUser] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
 
 
     const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0];
@@ -105,8 +106,10 @@ export const AppProvider = ({ children }) => {
         if(user) {
             socket.emit("addThisUser", user.userID )
             socket.on('getAllUser', (users) => {
-                // console.log(users);
                 // get all user connected to socket
+                const sockerUsers = users.filter(socketUser => socketUser.userID !== user.userID)
+                setOnlineUsers(sockerUsers);
+                console.log(sockerUsers);
             })
         }
     }, [user]);
@@ -129,7 +132,6 @@ export const AppProvider = ({ children }) => {
             const response = await serverBaseUrl.post(messagePath, messageBody);
             setMessages(prevMessages => [...prevMessages, response.data.data]);
             setMyMessage('');
-            console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -145,6 +147,7 @@ export const AppProvider = ({ children }) => {
                 currentChat,
                 chatMateUser,
                 user,
+                onlineUsers,
                 setMyMessage,
                 setCurrentChat,
                 handleSubmit,
