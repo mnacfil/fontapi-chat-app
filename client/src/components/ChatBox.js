@@ -7,7 +7,6 @@ import { useAccountContext } from '../context/Account/context';
 
 const ChatBox = () => {
   const { chattedUsers, dbUsers, setCurrentChat, onlineUsers } = useAppContext();
-  console.log(onlineUsers);
   const { user } = useAccountContext();
   const users = dbUsers.filter(dbUser => chattedUsers.includes(dbUser._id));
 

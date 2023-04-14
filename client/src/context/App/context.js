@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
     const [messages, setMessages] = useState([]);
     const [chatMateUser, setChatMateUser] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
-
+    const [notification, setNotification] = useState(0);
 
     const receiverID = currentChat?.userInvolve.filter(item => item !== user.userID)[0];
 
@@ -36,10 +36,13 @@ export const AppProvider = ({ children }) => {
                     sender: senderID,
                     message,
                     receivedAt: Date.now()
-                })
+                });
+                // notify the user
+                setNotification(prevCount => prevCount + 1);
             })
         })
-    }, [receiveMessage]);
+    }, []);
+    console.log(notification);
 
     // everytime user receiver a message,and different chatmate
     useEffect(() => {
@@ -148,6 +151,7 @@ export const AppProvider = ({ children }) => {
                 chatMateUser,
                 user,
                 onlineUsers,
+                notification,
                 setMyMessage,
                 setCurrentChat,
                 handleSubmit,

@@ -4,12 +4,13 @@ import SearchInput from './SearchInput';
 import ChatBox from './ChatBox';
 import OnlineUsers from './OnlineUsers';
 import {} from 'react-icons';
+import { useAppContext } from '../context/App/context';
 
 const ChatList = () => {
   const [activeTab, setActiveTab] = useState('friends');
-
+  const { onlineUsers } = useAppContext();
   const handleTab = (e) => {
-    setActiveTab(e.target.textContent.toLowerCase());
+    setActiveTab(e.target.name);
   }
 
   return (
@@ -23,14 +24,16 @@ const ChatList = () => {
           <button 
             className={`${activeTab === 'friends' && 'active-tab'} btn btn-block friends`}
             onClick={handleTab}
+            name='friends'
           >
             Friends
           </button>
           <button 
             className={`${activeTab === 'online' && 'active-tab'} btn btn-block online`}
             onClick={handleTab}
+            name='online'
           >
-            Online
+            Online ({onlineUsers.length})
           </button>
         </div>
         {

@@ -7,12 +7,10 @@ import {AccountProvider} from './context/Account/context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <AccountProvider>
       <AppProvider>
         <App />
       </AppProvider>
     </AccountProvider>
-  </React.StrictMode>
 );
 
