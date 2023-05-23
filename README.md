@@ -33,10 +33,6 @@ which contains the mongo_db connection url, token_secret, token_expiration.
 To add that, make a file called .env in the root directory of server folder
 and copy this value. 
 
-MONGO_URL = mongodb+srv://mnacfil:phidias22@test-projects.93f5pnx.mongodb.net/My-Chat-app?retryWrites=true&w=majority
-TOKEN_SECRET= QWERTYUIOP
-TOKEN_EXPIRATION = 2d
-
 After creating the env file you can now start the server by typing this command. 
 
     npm run dev
